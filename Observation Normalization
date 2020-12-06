@@ -1,0 +1,12 @@
+def converter(observation):
+
+    obs = observation['pov']
+    obs = obs / 255
+    compass_angle = observation['compassAngle']
+
+    compass_angle_scale = 180
+    compass_scaled = compass_angle / compass_angle_scale
+    compass_channel = np.ones(shape=list(obs.shape[:-1]) + [1], dtype=obs.dtype) * compass_scaled
+    obs = np.concatenate([obs, compass_channel], axis=-1)
+
+    return obs
